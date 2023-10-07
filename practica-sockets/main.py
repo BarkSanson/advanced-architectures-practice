@@ -27,6 +27,7 @@ class WaitHandler(socketserver.StreamRequestHandler):
                 time.sleep(5)
 
                 WaitHandler.max_players_reached.notify_all()
+
                 self.server.shutdown()
                 self.server.server_close()
                 WaitHandler.__shutdown_sockets()
@@ -51,6 +52,7 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        server.shutdown()
         server.server_close()
 
 if __name__ == "__main__":
