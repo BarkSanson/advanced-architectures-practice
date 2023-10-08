@@ -1,7 +1,7 @@
 # Distributed systems: networking
 ## Funcionamiento
 Esta actividad consiste en un servidor de espera de jugadores, el cual, cuando
-se llega a un número máximo de jugadores, el servidor espera cierto tiempo y se cierra.
+se llega a un número máximo de jugadores, espera cierto tiempo y se cierra.
 
 El funcionamiento es muy sencillo: cuando el jugador se conecta, se le envía un mensaje
 de bienvenida y se le informa a él y a los demás jugadores de la cantidad de jugadores
