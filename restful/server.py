@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 
 from server_state import ServerState
 
@@ -8,29 +8,49 @@ CLIENTS = 3
 numbers = []
 
 state = ServerState.WAITING
-agents_checked = 0
+agents_checked = set()
+
 
 @app.post('/number')
 def number():
+    global numbers
+
     json = request.get_json()
 
-    if len(numbers) < CLIENTS:
-        numbers.append(json["number"])
+    numbers.append(json["number"])
 
-    return jsonify({ "state": state.value }), 201
+    if len(numbers) >= CLIENTS:
+        print("Checking majority...")
+        check_if_majority()
+        numbers = []
 
-@app.get('/state')
-def state_check():
-    if len(numbers) < CLIENTS:
-        return jsonify({ "state": state.value }), 200
-    
-    check_if_majority()
+    return Response(status=200)
 
-    return jsonify({ "state": state.value }), 200
+
+@app.get('/state/<id_client>')
+def state_check(id_client):
+    global state
+    global agents_checked
+
+    if state == ServerState.SUCCESS or state == ServerState.WAITING:
+        return jsonify({"state": state.value}), 200
+
+    agents_checked.add(id_client)
+
+    if len(agents_checked) >= CLIENTS:
+        print("All agents checked state. Resetting...")
+
+        state = ServerState.WAITING
+        agents_checked = set()
+
+    return jsonify({"state": ServerState.FAILED.value }), 200
 
 
 def check_if_majority():
     global state
+
+    if state == ServerState.SUCCESS or state == ServerState.FAILED:
+        return
 
     count = {}
     max = ('', 0)
@@ -40,10 +60,10 @@ def check_if_majority():
             count[n] += 1
         else:
             count[n] = 1
-        
+
         if count[n] > max[1]:
             max = (n, count[n])
-    
+
     if max[1] > 1:
         state = ServerState.SUCCESS
     else:
