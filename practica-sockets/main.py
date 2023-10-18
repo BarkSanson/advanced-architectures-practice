@@ -7,6 +7,7 @@ HOST, PORT = 'localhost', 5000
 
 class WaitingRoomTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     daemon_threads = True
+    allow_reuse_address = True
 
 
 class WaitHandler(socketserver.StreamRequestHandler):
