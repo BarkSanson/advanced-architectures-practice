@@ -66,10 +66,10 @@ class Message(object):
                     ts=self.ts,
                     data=self.data)
 
-    @staticmethod
-    def from_json(json_str) -> 'Message':
+    @classmethod
+    def from_json(cls, json_str) -> 'Message':
         obj_dict = json.loads(json_str)
-        msg = Message(MessageType(obj_dict['msg_type']),
+        msg = cls(MessageType(obj_dict['msg_type']),
                       obj_dict['src'],
                       obj_dict['dest'],
                       obj_dict['ts'],
