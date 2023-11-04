@@ -4,6 +4,8 @@ import utils
 from message import Message
 import json
 
+from message import Message, MessageType
+
 
 class NodeServer(Thread):
     def __init__(self, node):
@@ -45,6 +47,14 @@ class NodeServer(Thread):
         self.server_socket.close()
 
     def process_message(self, msg):
-        # TODO
+        msg = Message.from_json(msg)
+
+        if msg.msg_type == MessageType.REQUEST:
+            self.node.handle_request(msg)
+        elif msg.msg_type == MessageType.REPLY:
+            self.node.handle_reply(msg)
+        elif msg.msg_type == MessageType.RELEASE:
+            self.node.handle_release(msg)
+        
 
         print("Node_%i receive msg: %s" % (self.node.id, msg))

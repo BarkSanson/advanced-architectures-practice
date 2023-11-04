@@ -13,51 +13,11 @@ class MessageType(enum.Enum):
 
 @dataclass
 class Message(object):
-    __msg_type: MessageType
-    __src: int
-    __data: str
-    __dest: int = None
-    __ts: int = None
-
-    @property
-    def msg_type(self):
-        return self.__msg_type
-
-    @msg_type.setter
-    def msg_type(self, msg_type):
-        self.__msg_type = msg_type
-
-    @property
-    def src(self):
-        return self.__src
-
-    @src.setter
-    def src(self, src):
-        self.__src = src
-
-    @property
-    def dest(self):
-        return self.__dest
-
-    @dest.setter
-    def dest(self, dest):
-        self.__dest = dest
-
-    @property
-    def ts(self):
-        return self.__ts
-
-    @ts.setter
-    def ts(self, ts):
-        self.__ts = ts
-
-    @property
-    def data(self):
-        return self.__data
-
-    @data.setter
-    def data(self, data):
-        self.__data = data
+    msg_type: MessageType
+    src: int
+    data: str
+    dest: int = None
+    ts: int = None
 
     def __json__(self):
         return dict(msg_type=self.msg_type,
