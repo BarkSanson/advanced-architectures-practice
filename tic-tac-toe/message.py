@@ -3,7 +3,7 @@ import json
 from dataclasses import dataclass, asdict
 
 
-@dataclass(frozen=True, )
+@dataclass(frozen=True)
 class Message:
     player: str
     row: int
