@@ -20,6 +20,7 @@ class Player:
         self.message_manager = message_manager
         self.message_manager.set_handler(self.handle_message)
 
+        # Let player X always start
         self.turn = True if self.player_type == Piece.X else False
         self.turn_count = 1
 
@@ -30,25 +31,32 @@ class Player:
     def play(self):
         time.sleep(5)
 
-        victory = self.board.is_victory()
-        while not self.board.is_full() and victory == Piece.NONE:
-
+        while True:
             # This coordination is needed since self.handle_message
             # runs on a different thread
             with self.is_turn:
                 while not self.turn:
                     self.is_turn.wait()
 
+            # Check if the game ended after the other player's move
+            victory = self.board.is_victory()
+            if victory != Piece.NONE or self.board.is_full():
+                break
+
             print(f"=================TURN {self.turn_count}=================")
             self._make_move()
 
             print(self.board)
 
+            # Check if the game ended after my move
             victory = self.board.is_victory()
+            if victory != Piece.NONE or self.board.is_full():
+                break
+
             self.turn_count += 1
             self.turn = False
 
-            time.sleep(2)
+            time.sleep(1)
 
         if victory == self.player_type:
             print("**********I won!**********")

@@ -46,19 +46,17 @@ class Board:
 
     def _is_row_win(self, piece_type):
         for row in range(Board.BOARD_SIZE):
-            for col in range(Board.BOARD_SIZE):
-                if self.board[row][col] != piece_type:
-                    return False
+            if all(self.board[row][col] == piece_type for col in range(Board.BOARD_SIZE)):
+                return True
 
-        return True
+        return False
 
     def _is_col_win(self, piece_type):
         for col in range(Board.BOARD_SIZE):
-            for row in range(Board.BOARD_SIZE):
-                if self.board[row][col] != piece_type:
-                    return False
+            if all(self.board[row][col] == piece_type for row in range(Board.BOARD_SIZE)):
+                return True
 
-        return True
+        return False
 
     def _is_diag_win(self, piece_type):
         if all(self.board[i][i] == piece_type for i in range(Board.BOARD_SIZE)):

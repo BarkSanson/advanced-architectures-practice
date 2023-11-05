@@ -36,8 +36,6 @@ class MessageManager:
             args=[message]
         ).start()
 
-        client.publish("pong", "ack", 0)
-
     def send_move(self, message: Message):
         payload = message.to_json()
 
