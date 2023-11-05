@@ -13,7 +13,7 @@ Docker. Los agentes se han implementado en Python, utilizando la librería paho-
 
 Los mensajes que se intercambian los agentes son muy sencilos, y tienen la siguiente
 estructura JSON:
-```json
+```
 {
     "player": <"X" | "O">,
     "row": <0 | 1 | 2>,
