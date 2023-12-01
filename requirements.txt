@@ -3,3 +3,5 @@ requests
 gmqtt
 uvloop
 paho-mqtt
+pyspark
+
