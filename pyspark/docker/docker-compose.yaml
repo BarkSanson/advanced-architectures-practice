@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  master:
+    build:
+      context: .
+      dockerfile: Dockerfile-master
+    container_name: master
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+      - "4040:4040"
+    deploy:
+      resources:
+        reservations:
+          cpus: "2.0"
+          memory: "2G"
+    volumes:
+      - /dev/null:/dev/null
+
+  worker:
+    build: 
+      context: .
+      dockerfile: Dockerfile-worker
+    deploy:
+      replicas: 2
+    volumes:
+      - /dev/null:/dev/null
+      

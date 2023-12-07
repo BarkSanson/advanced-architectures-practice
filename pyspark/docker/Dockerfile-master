@@ -1,0 +1,17 @@
+FROM ubuntu:latest
+
+WORKDIR /spark
+
+RUN apt-get upgrade  && apt-get update
+RUN apt-get install curl -y
+
+RUN curl -o spark-3.5.0-bin-hadoop3.tgz https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+
+RUN tar xvfz spark-3.5.0-bin-hadoop3.tgz
+RUN rm -rf spark-3.5.0-bin-hadoop3.tgz && apt-get install openjdk-17-jdk -y 
+
+EXPOSE 4040
+EXPOSE 8080
+EXPOSE 7077
+
+CMD ./spark-3.5.0-bin-hadoop3/sbin/start-master.sh && tail -f /dev/null
