@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <oneapi/tbb/parallel_for.h>
+#include <tbb/tbb.h>
 
-#include "./mergeSort.hpp"
+#include "mergeSort.hpp"
+#include "quickSort.hpp"
 
 void printVector(std::vector<int> vec) {
     for (size_t i = 0; i < vec.size(); i++) {
@@ -24,16 +26,30 @@ int main() {
         }
     );
 
-    std::cout << "****MERGE SORT****" << std::endl;
+    std::cout << "****MERGESORT****" << std::endl;
 
     std::cout << "Unsorted: ";
     printVector(to_sort);
 
     tbb::tick_count t0 = tbb::tick_count::now();
-    auto result = mergeSort(to_sort, size);
+    auto result_merge = mergeSort(to_sort, size);
     tbb::tick_count t1 = tbb::tick_count::now();
 
     std::cout << "Time: " << (t1 - t0).seconds() << std::endl;
     std::cout << "Sorted: ";
-    printVector(result);
+    printVector(result_merge);
+
+    std::cout << "****QUICKSORT****" << std::endl;
+    std::cout << "Unsorted: ";
+    printVector(to_sort);
+
+    int high = size - 1;
+
+    t0 = tbb::tick_count::now();
+    quickSort(to_sort, 0, high);
+    t1 = tbb::tick_count::now();
+
+    std::cout << "Time: " << (t1 - t0).seconds() << std::endl;
+    std::cout << "Sorted: ";
+    printVector(to_sort);
 }
