@@ -3,7 +3,7 @@
 #include <oneapi/tbb/parallel_reduce.h>
 #include <oneapi/tbb/blocked_range.h>
 
-std::vector<int> merge(std::vector<int> vec1, std::vector<int> vec2) {
+std::vector<int> merge(std::vector<int>& vec1, std::vector<int>& vec2) {
     std::vector<int> merged_vec;
 
     while (vec1.size() > 0 && vec2.size() > 0) {
@@ -30,7 +30,7 @@ std::vector<int> merge(std::vector<int> vec1, std::vector<int> vec2) {
     return merged_vec;
 }
 
-std::vector<int> mergeSort(std::vector<int> vec, size_t size) {
+std::vector<int> mergeSort(std::vector<int>& vec, size_t size) {
     std::vector<std::vector<int>> mapped_vec(size);
 
     oneapi::tbb::parallel_for(

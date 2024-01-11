@@ -1,4 +1,13 @@
 cc_library(
+    name = "radixSort",
+    srcs = ["radixSort.cpp"],
+    hdrs = ["radixSort.hpp"],
+    deps = [
+        "@oneTBB//:tbb",
+    ]
+)
+
+cc_library(
     name = "quickSort",
     srcs = ["quickSort.cpp"],
     hdrs = ["quickSort.hpp"],
@@ -22,6 +31,7 @@ cc_binary(
     deps = [
         "@oneTBB//:tbb",
         ":mergeSort",
-        ":quickSort"
+        ":quickSort",
+        ":radixSort"
     ],
 )
