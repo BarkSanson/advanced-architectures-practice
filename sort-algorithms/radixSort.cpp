@@ -72,7 +72,6 @@ std::vector<int> radixSort(std::vector<int>& vec, std::size_t size) {
             oneapi::tbb::blocked_range<int>(0, size),
             [&](const oneapi::tbb::blocked_range<int> r) {
                 for (int j = r.begin(); j < r.end(); j++) {
-                    std::cout << "j: " << j << std::endl;
                     if (bits[j]) {
                         temp[index_one[j] - 1] = out[j];
                     } else {
