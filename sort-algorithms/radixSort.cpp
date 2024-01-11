@@ -24,6 +24,7 @@ std::vector<int> radixSort(std::vector<int>& vec, std::size_t size) {
             }
         );
 
+        // Scan the bits to find the index of the 0s
         std::vector<int> index_zero(size);
         int last_index_zero = oneapi::tbb::parallel_scan(
             oneapi::tbb::blocked_range<int>(0, size),
@@ -45,6 +46,8 @@ std::vector<int> radixSort(std::vector<int>& vec, std::size_t size) {
             }
         );
 
+        // Now, same but for 1s. Note that it's necessary
+        // to add last_index_zero to the sum
         std::vector<int> index_one(size);
         int last_index_one = oneapi::tbb::parallel_scan(
             // Do the same as above, but starting from last_index_zero
@@ -67,6 +70,8 @@ std::vector<int> radixSort(std::vector<int>& vec, std::size_t size) {
             }
         );
 
+        // Finally, just reorder the array based
+        // on the indices
         std::vector<int> temp(size);
         oneapi::tbb::parallel_for(
             oneapi::tbb::blocked_range<int>(0, size),
