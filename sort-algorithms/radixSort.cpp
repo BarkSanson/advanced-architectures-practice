@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <bitset>
 #include <oneapi/tbb/parallel_for.h>
@@ -6,22 +7,17 @@
 
 #include "radixSort.hpp"
 
-std::vector<int> radixSort(std::vector<int>& vec, std::size_t size) {
-    size_t bits = 8;
+std::vector<int> radixSort(std::vector<int>& vec, int size) {
+    int bits = 10;
 
     std::vector<int> out(vec);
-    for (size_t i = 0; i < bits; i++) {
+    for (int i = 0; i < bits; i++) {
         std::vector<bool> bits(size);
 
         // Map numbers to the bit at the current index
-        oneapi::tbb::parallel_for(
-            oneapi::tbb::blocked_range<int>(0, size),
-            [&](const oneapi::tbb::blocked_range<int> r) {
-                for (int j = r.begin(); j < r.end(); j++) {
-                    bits[j] = (out[j] >> i & 1) == 1;
-                }
-            }
-        );
+        for (int j = 0; j < size; j++) {
+            bits[j] = (out[j] >> i) & 1;
+        }
 
         // Scan the bits to find the index of the 0s
         std::vector<int> index_zero(size);
@@ -72,18 +68,13 @@ std::vector<int> radixSort(std::vector<int>& vec, std::size_t size) {
         // Finally, just reorder the array based
         // on the indices
         std::vector<int> temp(size);
-        oneapi::tbb::parallel_for(
-            oneapi::tbb::blocked_range<int>(0, size),
-            [&](const oneapi::tbb::blocked_range<int> r) {
-                for (int j = r.begin(); j < r.end(); j++) {
-                    if (bits[j]) {
-                        temp[index_one[j] - 1] = out[j];
-                    } else {
-                        temp[index_zero[j] - 1] = out[j];
-                    }
-                }
+        for (int j = 0; j < size; j++) {
+            if (bits[j]) {
+                temp[index_one[j] - 1] = out[j];
+            } else {
+                temp[index_zero[j] - 1] = out[j];
             }
-        );
+        }
 
         out = temp;
     }

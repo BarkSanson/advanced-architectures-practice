@@ -15,7 +15,7 @@ void printVector(std::vector<int> vec) {
 }
 
 int main() {
-    size_t size = 50;
+    size_t size = 20;
     std::vector<int> to_sort(size);
 
     generate(to_sort.begin(), to_sort.end(), []() { return rand() % 100; });
