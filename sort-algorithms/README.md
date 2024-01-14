@@ -19,7 +19,7 @@ En este proyecto se incluyen todos los ficheros `.hpp` y `.cpp` con el nombre de
 
 Por un lado, `quickSort_proposal` cambia la implementación de `quickSort`. En esta implementación, se añaden las funciones `gather_if`, `get_smaller_equal` y `get_greater`. En las dos últimas funciones se comprueban los números que son menores o iguales o mayores que el pivote, respectivamente, utilizando `parallel_for`. Ambas llaman a `gather_if`, la cual genera los respectivos índices con `parallel_scan`. Esta implementación devuelve un vector y no modifica el pasado por parámetro, a diferencia de `quickSort`.
 
-Por otro lado, `radixSort_proposal` añade paralelismo a la hora de mapear los números al bit i, y al reordenar el vector con los índices, todo con `parallel_for`.
+Por otro lado, `radixSort_proposal` añade paralelismo a la hora de mapear los números al bit $i$, y al reordenar el vector con los índices, todo con `parallel_for`.
 
 Al no poder descubrir por qué se generan los _segmentation faults_, se ha reducido el paralelismo tanto en Radixsort y Quicksort, cuyas versiones finales se encuentran en los archivos con nombre `radixSort` y `quickSort`, respectivamente. De cualquier forma, se añaden estas propuestas como observación de que es posible añadir más paralelismo a los algoritmos.
 
