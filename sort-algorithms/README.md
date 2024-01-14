@@ -12,7 +12,7 @@ Empezando por el Mergesort, el paralelismo se encuentra en dos puntos principalm
 
 Siguiendo con el Quicksort, el paralelismo se encuentra en tres partes. En primer lugar, en las llamadas recursivas a Quicksort. Al estar modificando cada una de las llamadas partes distintas del vector, se pueden ejecutar en paralelo con `parallel_invoke`. A continuación, en la comprobación de si un elemento es menor que el pivote. Como se ha mencionado antes, esta comprobación no tiene ninguna dependencia, así que se puede realizar en paralelo con `parallel_for`. Finalmente, existe paralelismo en la creación de los índices de cada uno de los elementos, y se ha implementado con `parallel_scan`.
 
-Por último, el Radixsort tiene principalmente dos puntos de paralelismo, y son en la creación de los índices de los números con el bit i a 0 o a 1, ambos implementados con `parallel_scan`.
+Por último, el Radixsort tiene principalmente dos puntos de paralelismo, y son en la creación de los índices de los números con el bit $i$ a 0 o a 1, ambos implementados con `parallel_scan`.
 
 ## Aclaraciones
 En este proyecto se incluyen todos los ficheros `.hpp` y `.cpp` con el nombre de cada uno de los algoritmos. Además, hay dos propuestas que mejoran el paralelismo de Quicksort y Radixsort. Estos ficheros son los que tienen nombre `quickSort_proposal` y `radixSort_proporsal`. Estos ficheros son los ideales en cuanto a paralelismo, pero que generan _segmentation faults_ por alguna razón que no se ha podido descubrir.
