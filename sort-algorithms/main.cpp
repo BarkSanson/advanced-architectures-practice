@@ -7,6 +7,9 @@
 #include "quickSort.hpp"
 #include "radixSort.hpp"
 
+// #include "quickSort_proposal.hpp"
+// #include "radixSort_proposal.hpp"
+
 void printVector(std::vector<int> vec) {
     for (size_t i = 0; i < vec.size(); i++) {
         std::cout << vec[i] << " ";
@@ -15,8 +18,10 @@ void printVector(std::vector<int> vec) {
 }
 
 int main() {
-    size_t size = 20;
+    size_t size = 50;
     std::vector<int> to_sort(size);
+
+    srand(time(NULL));
 
     generate(to_sort.begin(), to_sort.end(), []() { return rand() % 100; });
 
